@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 
 const Login = ({ handleLogin }) => {
-  const [mail, setmail] = useState('');
-  const [password, setpassword] = useState('');
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const formhandling = (e) => {
+  const formHandling = (e) => {
     e.preventDefault();
     handleLogin(mail, password);
-    setmail('');
-    setpassword('');
+    setMail('');
+    setPassword('');
+  };
+
+  // Function to auto-fill demo credentials
+  const demoLogin = (role) => {
+    if (role === 'admin') {
+      setMail('admin@example.com');
+      setPassword('4314');
+    } else {
+      setMail('sandy@gmail.com');
+      setPassword('4314');
+    }
   };
 
   return (
     <div className='h-[100vh] w-screen flex flex-col items-center justify-center'>
       <h3 className='font-extrabold text-green-600 mb-10 text-3xl'>Login</h3>
-      <div className='mt-10 border-2 border-green-300 rounded-xl h-[400px] w-[90%] sm:w-[450px] p-5'>
-        <form
-          onSubmit={(e) => {
-            formhandling(e);
-          }}
-          className='mt-10 flex flex-col items-center justify-center'
-        >
+      <div className='mt-10 border-2 border-green-300 rounded-xl h-auto w-[90%] sm:w-[450px] p-5'>
+        <form onSubmit={formHandling} className='mt-10 flex flex-col items-center justify-center'>
           <input
-            onChange={(e) => {
-              setmail(e.target.value);
-            }}
+            onChange={(e) => setMail(e.target.value)}
             value={mail}
             required
             type='email'
@@ -33,9 +37,7 @@ const Login = ({ handleLogin }) => {
           />
 
           <input
-            onChange={(e) => {
-              setpassword(e.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
             type='password'
@@ -44,9 +46,26 @@ const Login = ({ handleLogin }) => {
           />
 
           <button className='text-xl rounded-full h-12 bg-green-600 font-bold text-white border-2 border-green-600 w-40 m-5'>
-            LogIn
+            Log In
           </button>
         </form>
+
+        {/* Demo Section */}
+        <h4 className='text-lg font-semibold text-center mb-4'>Demo</h4>
+        <div className='flex m-5 justify-between'>
+          <button
+            onClick={() => demoLogin('admin')}
+            className='text-lg rounded-full h-10 bg-blue-500 font-semibold text-white border-2 border-blue-500 w-48'
+          >
+            Login as Admin
+          </button>
+          <button
+            onClick={() => demoLogin('user')}
+            className='text-lg rounded-full h-10 bg-gray-500 font-semibold text-white border-2 border-gray-500 w-48'
+          >
+            Login as User
+          </button>
+        </div>
       </div>
     </div>
   );
